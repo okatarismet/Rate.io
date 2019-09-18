@@ -5,8 +5,6 @@ import Middle from './Middle/Middle'
 import Lower from './Lower/Lower'
 
 const InfoCard = (props) =>{
-    console.log("ayranli->");
-    console.log(props.elem);
     return <div className={classes.infoCard}>
                 <Upper elem={props.elem}/>
                 <Middle/>

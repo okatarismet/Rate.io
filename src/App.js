@@ -13,36 +13,29 @@ import Login from './components/Login/Login';
 
 class App extends Component {
   state = {
-    page: 0,
     openLogin: false,
     query: "",
     elem: {}
   }
   
   inputChangedHandler = (event) =>{
-    console.log("inputChangedHandler()");
     if(event.target.value.length >= 3){
-      console.log("3");
       this.setState({
-        page: 1,
         query: event.target.value
       })
       this.props.history.push({pathname:'/resultPage'});
     }
   }
   infoCardHandler = (elem) =>{
-    // console.log(elem);
+    console.log(elem);
    
       this.setState({
-        page: 2,
         elem:elem
       })
     
   }
   mainHeaderClickHandler = () =>{
-    this.setState({
-      page: 0,
-    })
+    
     this.props.history.push({pathname:'/'});
   }
   closeLoginHandler = () =>{
@@ -58,18 +51,13 @@ class App extends Component {
     let MainHeader = 'mainHeader'
     let MainInput = 'mainInput'
     let AppClass = ''
-    if(this.state.page == 1 ){
-      MainBox = 'mainBoxResult';
-      MainHeader = 'mainHeaderResult'
-      MainInput = 'mainInputResult'
-      
-    }
+
     if(this.state.page == 2){
       MainBox = 'mainBoxResult';
       MainHeader = 'mainHeaderResult'
       MainInput = 'mainInputResult'
       // AppClass = "modal"
-      infoCard =  <InfoCard elem={this.state.elem}/>
+      // infoCard =  <InfoCard elem={this.state.elem}/>
     }
     return (
       
@@ -84,6 +72,7 @@ class App extends Component {
                 purchaseCancelled={this.purchaseCancelHandler}
                 purchaseContinued={this.purchaseContinueHandler} />
           </Modal>
+         
           <Route path="/" exact 
             render={ (props) => <MainPage 
             mainHeaderClickHandler = {this.mainHeaderClickHandler}

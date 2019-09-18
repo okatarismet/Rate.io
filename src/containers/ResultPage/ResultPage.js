@@ -1,6 +1,8 @@
 import React from 'react';
 import classes from './ResultPage.css'
 import Element from './Element/Element'
+import Modal from '../../components/UI/Modal/Modal';
+import InfoCard from '../../components/InfoCard/InfoCard'
 const axios = require('axios');
 
 
@@ -10,7 +12,9 @@ const ResultPage = (props) =>{
     let brand = null;
 
     const [thisState,thisSetState] = React.useState({
-        data: [{}]
+        data: [{}],
+        opeInfoCard: false,
+        elem: {}
     })
     let response1 = 0;
     const start = (resp)=>{ 
@@ -41,6 +45,11 @@ const ResultPage = (props) =>{
     }
       
    React.useEffect(()=>start(response1),[props.search])
+   console.log("-;;;;;;;;");
+   console.log(thisState);
+   console.log(thisState.data);
+
+   console.log("-;;;;;;;;");
     if(thisState.data.length == 0){
         console.log("no match found");
     }
@@ -49,7 +58,30 @@ const ResultPage = (props) =>{
         console.log("response 1");
       
     }
+    const closeInfoCard = () =>{
+        thisSetState({
+            opeInfoCard: false
+        })
+    }
+    const openInfoCard = () =>{
+        thisSetState({
+            opeInfoCard: true
+        })
+    }
+    const infoCardHandler = (elem) =>{
+        console.log("basyom ha")
+        console.log(thisState.data);
+        console.log(elem);
+       
+          thisSetState({
+            elem:elem
+          })
+        
+      }
     return  <div>
+         <Modal show={thisState.openInfoCard} modalClosed={closeInfoCard}>
+            <InfoCard elem={thisState.elem}/>
+          </Modal>
             <div className={classes.mainBoxResult}>
                 <h1 className={classes.mainHeaderResult} onClick={props.mainHeaderClickHandler}>Rate.io</h1>
                 <input className={classes.mainInputResult} type="text" onChange={props.changed} placeholder="Search Something. Persons, Foundations, Brands ..."/>
@@ -57,7 +89,7 @@ const ResultPage = (props) =>{
             </div>
             <div className={classes.resultBox}>
                 <h1>Persons</h1>
-                <div><Element click={props.click} data={thisState.data} person={person}/></div>
+                <Element click={infoCardHandler} data={thisState.data} person={person}/>
                 {/* <h1>Foundations</h1>
                 <Element data={thisState.data} foundation={foundation}/>
                 <h1>Brands</h1>
