@@ -1,0 +1,28 @@
+
+.Lower {
+    display: grid;
+    grid-template-rows: 50px 50px;
+    grid-gap: 10px;
+    padding: 10px;
+    margin-top: 27px;
+    margin-left: 11px;
+    margin-right: 11px;
+}
+.rateButton {
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    border:none;
+    background-color: #3EB650;
+    color: #F7F7F7;
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: -65px;
+    font-family: "Open Sans";
+    font-size: 30px;
+    cursor: pointer;
+    
+}
+.rateButton:hover {
+    background-color: rgb(142, 255, 159);
+}

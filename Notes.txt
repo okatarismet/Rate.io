@@ -1,0 +1,18 @@
+
+    Burada neler dondugu yazilacak
+
+    - Iyi bir React structure inda bunlar olur
+    -src
+        -assets
+            "Image larin tutuldugu yer"
+        -components
+            "components larin tutuldugu yer"
+        -containers
+            "App.js gibi seylerin tutuldugu yer"
+    index.css
+    index.js
+        "!disarida sadece index ler kalir yani src nin hemen icinde"
+
+=> const persons = () =>(
+    
+); //Bu sekilde olunca direk return etmissin kabul ediyor.

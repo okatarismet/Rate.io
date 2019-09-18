@@ -1,0 +1,42 @@
+.itemBox {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    border-radius: 3px;
+    margin-left: 2em;
+    cursor: pointer;
+}
+.itemBox:hover {
+    background-color: #F7F7F7;
+}
+#p1 {
+    
+    /* float: left; */
+    margin-left: 1em;
+    width: 35%;
+    display: inline-block
+}
+#btn1 {
+    /* margin-left: 13em; */
+    float: right;
+    width: 30%;
+    border: none;
+    height: 22px;
+    padding: 0px;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    display: inline-block;
+    background: rgba(207, 253, 255, 0.8);
+    filter: brightness(100%) blur(0.1px) contrast(100%);
+    border-radius: 12px;
+    font-family: "Open Sans";
+    font-size: 12px;
+    color: rgb(2, 70, 116);
+}
+#btn1:hover {
+    background: rgba(207, 253, 255, 1);
+}
+#star1 {
+    /* margin-left: 13em; */
+    /* position: relative; */
+    /* float: left; */
+    width: 30%;
+    display: inline-block
+}
