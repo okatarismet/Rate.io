@@ -1,7 +1,6 @@
-.ContactData {
+.Login {
     margin: 20px auto;
     width: 80%;
-    font-size: 14px;
     text-align: center;
     box-shadow: 0 2px 3px #ccc;
     border: 1px solid #eee;
@@ -9,8 +8,10 @@
     box-sizing: border-box;
 }
 
+
+
 @media (min-width: 600px) {
-    .ContactData {
+    .Login {
         width: 500px;
     }
 }
