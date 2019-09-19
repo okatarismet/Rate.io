@@ -6,8 +6,14 @@
     border: 1px solid #eee;
     padding: 10px;
     box-sizing: border-box;
+    display: block;
 }
-
+.notValid{
+    color: #D8000C;
+}
+.notShow{
+    display: none;
+}
 
 
 @media (min-width: 600px) {

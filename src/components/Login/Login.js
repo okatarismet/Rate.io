@@ -10,63 +10,76 @@ const axios = require('axios');
 
 class Login extends Component {
     state = {
-        loginForm:{
-            email:{
-                elementType: 'input',
-                elementConfig: {
-                    type:'email',
-                    placeholder: 'Senin E-mailin'
-                },
-                value:''
-            },
-            password:{
-                elementType: 'input',
-                elementConfig: {
-                    type:'password',
-                    placeholder: 'Sifren'
-                },
-                value:''
+        email:'',
+        password:'',
+        loading: false,
+        formIsValid: true,
+        emailIsValid:true,
+        passwordIsValid:true
+    }
+    
+
+    emailChangedHandler = (event) =>{
+       
+        const value = event.target.value;
+        if(value !== "undefined"){
+            console.log(123123);
+            let lastAtPos = value.lastIndexOf('@');
+            let lastDotPos = value.lastIndexOf('.');
+    
+            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && value.indexOf('@@') == -1 && lastDotPos > 2 && (value.length - lastDotPos) > 2)) {
+               this.setState({
+                   emailIsValid:false
+               })
+            } else {
+                this.setState({
+                    emailIsValid:true
+                })
             }
-        },
+        } 
+       
+          this.setState({
+            email: value
+          })
         
-        loading: false
-
-    }
-
-    orderHandler = ( event ) => {
-        event.preventDefault();
-        this.setState( { loading: true } );
-        const order = {
-
-                email: 'test@test.com',
-                password: 'iso55'
-        }
-        axios.post( '/orders.json', order )
-            .then( response => {
-                this.setState( { loading: false } );
-                this.props.history.push('/');
-            } )
-            .catch( error => {
-                this.setState( { loading: false } );
-            } );
-    }
-
+      }
+      passwordChangedHandler = (event) =>{
+       
+        const value = event.target.value;
+        if(value !== "undefined"){
+            
+            if (value.length < 6) { 
+               this.setState({
+                   passwordIsValid:false
+               })
+            } else {
+                this.setState({
+                    passwordIsValid:true
+                })
+            }
+        } 
+        this.setState({
+          password: value
+        })
+      }
+     
     render () {
-        let form = (
-            <form>
-               
-                <Input type="email" name="email" placeholder="Your Mail" />
-                <Input type="password" name="street" placeholder="Street" />
-                <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
-            </form>
-        );
-        if ( this.state.loading ) {
-            form = <Spinner />;
-        }
+     
         return (
             <div className={classes.Login}>
-                <h4>Enter your Contact Data</h4>
-                {form}
+                <div>
+                    <label>E-Mail</label>
+                    <input onChange={this.emailChangedHandler} type="email" name="email" placeholder="your mail" />
+                    { !this.state.emailIsValid ? <p className={classes.notValid}>not valid email</p> : null }
+                </div>
+                <div>
+                    <label>Password</label>
+                    <input onChange={this.passwordChangedHandler} type="password" name="password" placeholder="password" />
+                    { !this.state.passwordIsValid ? <p className={classes.notValid}>password should be at least 6 digits</p> : null }
+                </div>
+                <div>
+                    <button>Login</button>
+                </div>
             </div>
         );
     }
