@@ -49,6 +49,7 @@ class Login extends Component {
             } 
         })
         .then(function (response) {
+            console.log(response);
             localStorage.setItem('token',response.data.token)
             console.log("token is " +localStorage.getItem('token'))
             alert('Login Succesfull !')

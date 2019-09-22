@@ -49,11 +49,12 @@ class ResultPage extends Component{
     }
     const infoCardHandler = (elem) =>{
         console.log("basyom ha")
-        console.log(this.state.data);
         console.log(elem);
+        // console.log(this.state.data);
+        // console.log(elem);
         const data = this.state.data;
         this.setState({
-            elem: {type: "user", id: 1, name: "İsmet OkaTaR", place: "Golbasi", title: "Fitness Sporcusu"}
+            elem: elem
         })
         console.log(this.state.elem);
         openInfoCard(data);
@@ -64,18 +65,15 @@ class ResultPage extends Component{
          
            
         
-            <div className={classes.mainBoxResult}>
+            {/* <div className={classes.mainBoxResult}>
                 <h1 className={classes.mainHeaderResult} onClick={this.props.mainHeaderClickHandler}>Rate.io</h1>
                 <input className={classes.mainInputResult} type="text" onChange={this.props.changed} placeholder="Search Something. Persons, Foundations, Brands ..."/>
                 
-            </div>
+            </div> */}
             { this.state.opeInfoCard ? <InfoCard elem={this.state.elem}/> :<div className={classes.resultBox}>
-                <h1>Persons</h1>
-                <Element click={infoCardHandler} data={this.props.data}/>
-                {/* <h1>Foundations</h1>
-                <Element data={this.state.data} foundation={foundation}/>
-                <h1>Brands</h1>
-                <Element data={this.state.data} brand={brand}/> */}
+            <h1>Persons</h1>
+            <Element click={infoCardHandler} data={this.props.data}/>
+             
             </div>}
             </div>
 }

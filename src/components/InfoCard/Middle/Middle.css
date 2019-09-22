@@ -1,10 +1,12 @@
 
 .Middle {
+    /* position: relative; */
     display: grid;
     grid-template-columns: 15em 15em;
     background-color: #EBEBEB;
     grid-gap: 10px;
     padding-left: 49px;
+    /* width: 100%; */
     padding-top: 27px;
     padding-bottom: 27px;
     margin-top: 27px;
