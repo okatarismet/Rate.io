@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import classes from './ResultPage.css'
 import Element from './Element/Element'
 import Modal from '../../components/UI/Modal/Modal';
@@ -6,96 +6,78 @@ import InfoCard from '../../components/InfoCard/InfoCard'
 const axios = require('axios');
 
 
-const ResultPage = (props) =>{
-    let person = null;
-    let foundation = null;
-    let brand = null;
-
-    const [thisState,thisSetState] = React.useState({
-        data: [{}],
-        opeInfoCard: false,
-        elem: {}
-    })
-    let response1 = 0;
-    const start = (resp)=>{ 
+class ResultPage extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [{}],
+            opeInfoCard: false,
+            elem: {}
+        }
+    }
+    componentDidUpdate(){
         
+    }
+    render() {
+    const start = ()=>{ 
         axios({
-            method: 'post',
-            url: 'http://localhost:8080/users/list/search',
+            method: 'get',
+            url: 'http://localhost:8080/search/'+this.props.search,
             headers: {},
-            data: {
-                search:props.search
-            } 
+            data: {search:this.props.search} 
         })
         .then(function (response) {
-            thisSetState({
-                data: response.data
-            })
+            this.setState({data: response.data})
             console.log(response.data);
-            resp = 1;
         })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .finally(function () {
-            // always executed
-        });
+        .catch(function (error) {console.log(error);})
+        .finally(function () {});
 
     }
       
-   React.useEffect(()=>start(response1),[props.search])
-   console.log("-;;;;;;;;");
-   console.log(thisState);
-   console.log(thisState.data);
-
-   console.log("-;;;;;;;;");
-    if(thisState.data.length == 0){
-        console.log("no match found");
-    }
-    let Elements = null;
-    if(response1 == 1){
-        console.log("response 1");
-      
-    }
+    
+   
     const closeInfoCard = () =>{
-        thisSetState({
-            opeInfoCard: false
+        this.setState({
+            openInfoCard: false
         })
     }
-    const openInfoCard = () =>{
-        thisSetState({
+    const openInfoCard = (data) =>{
+        this.setState({
             opeInfoCard: true
         })
     }
     const infoCardHandler = (elem) =>{
         console.log("basyom ha")
-        console.log(thisState.data);
+        console.log(this.state.data);
         console.log(elem);
-       
-          thisSetState({
-            elem:elem
-          })
+        const data = this.state.data;
+        this.setState({
+            elem: {type: "user", id: 1, name: "İsmet OkaTaR", place: "Golbasi", title: "Fitness Sporcusu"}
+        })
+        console.log(this.state.elem);
+        openInfoCard(data);
         
       }
     return  <div>
-         <Modal show={thisState.openInfoCard} modalClosed={closeInfoCard}>
-            <InfoCard elem={thisState.elem}/>
-          </Modal>
+         
+         
+           
+        
             <div className={classes.mainBoxResult}>
-                <h1 className={classes.mainHeaderResult} onClick={props.mainHeaderClickHandler}>Rate.io</h1>
-                <input className={classes.mainInputResult} type="text" onChange={props.changed} placeholder="Search Something. Persons, Foundations, Brands ..."/>
+                <h1 className={classes.mainHeaderResult} onClick={this.props.mainHeaderClickHandler}>Rate.io</h1>
+                <input className={classes.mainInputResult} type="text" onChange={this.props.changed} placeholder="Search Something. Persons, Foundations, Brands ..."/>
                 
             </div>
-            <div className={classes.resultBox}>
+            { this.state.opeInfoCard ? <InfoCard elem={this.state.elem}/> :<div className={classes.resultBox}>
                 <h1>Persons</h1>
-                <Element click={infoCardHandler} data={thisState.data} person={person}/>
+                <Element click={infoCardHandler} data={this.props.data}/>
                 {/* <h1>Foundations</h1>
-                <Element data={thisState.data} foundation={foundation}/>
+                <Element data={this.state.data} foundation={foundation}/>
                 <h1>Brands</h1>
-                <Element data={thisState.data} brand={brand}/> */}
-            </div>
+                <Element data={this.state.data} brand={brand}/> */}
+            </div>}
             </div>
 }
-
+    }
 export default ResultPage
