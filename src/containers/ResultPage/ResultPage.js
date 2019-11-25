@@ -15,9 +15,9 @@ class ResultPage extends Component{
             elem: {}
         }
     }
-    componentDidUpdate(){
-        
-    }
+    closeInfoCard = () =>{
+        this.setState({openInfoCard:false})
+      }
     render() {
     const start = ()=>{ 
         axios({
@@ -37,12 +37,12 @@ class ResultPage extends Component{
       
     
    
-    const closeInfoCard = () =>{
-        this.setState({
-            openInfoCard: false
-        })
-    }
-    const openInfoCard = (data) =>{
+    // const closeInfoCard = () =>{
+    //     this.setState({
+    //         openInfoCard: false
+    //     })
+    // }
+    const openInfoCard = () =>{
         this.setState({
             opeInfoCard: true
         })
@@ -57,13 +57,15 @@ class ResultPage extends Component{
             elem: elem
         })
         console.log(this.state.elem);
-        openInfoCard(data);
+        openInfoCard();
         
       }
     return  <div>
          
-         
-           
+         {/* <Modal show={this.state.opeInfoCard} modalClosed={this.closeInfoCard}>
+         <InfoCard elem={this.state.elem}/>
+          </Modal>
+            */}
         
             {/* <div className={classes.mainBoxResult}>
                 <h1 className={classes.mainHeaderResult} onClick={this.props.mainHeaderClickHandler}>Rate.io</h1>

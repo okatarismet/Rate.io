@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Route, Link, withRouter }from 'react-router-dom';
 import './App.css';
+import FaceIcon from '@material-ui/icons/Face';
 
 import MainPage from './containers/MainPage/MainPage'
 import ResultPage from './containers/ResultPage/ResultPage'
@@ -8,6 +9,8 @@ import InfoCard from './components/InfoCard/InfoCard'
 import Input from './components/UI/Input/Input'
 import Modal from './components/UI/Modal/Modal';
 import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
+import { classes } from 'istanbul-lib-coverage';
 const axios = require('axios');
 
 
@@ -17,6 +20,7 @@ class App extends Component {
 
     this.state = {
       openLogin: false,
+      openSignup: false,
       isLogin:false,
       query: "",
       data:[{}],
@@ -67,6 +71,12 @@ class App extends Component {
   openLoginHandler = () =>{
     this.setState({openLogin:true})
   }
+  closeSignupHandler = () =>{
+    this.setState({openSignup:false})
+  }
+  openSignupHandler = () =>{
+    this.setState({openSignup:true})
+  }
   isLogin = () => {
     return localStorage.getItem('token') != 'undefined';
   }
@@ -114,14 +124,20 @@ class App extends Component {
       
       <div className="App">
         <Modal show={this.state.openLogin} modalClosed={this.closeLoginHandler}>
-            <Login 
-                ingredients={this.state.ingredients}
-                price={this.state.totalPrice}
-                purchaseCancelled={this.purchaseCancelHandler}
-                purchaseContinued={this.purchaseContinueHandler} />
-          </Modal>
+            <Login/>
+        </Modal>
+        <Modal show={this.state.openSignup} modalClosed={this.closeSignupHandler}>
+            <Signup/>
+        </Modal>
+        
+        <button onClick={this.openSignupHandler}>Signup</button>
         <button onClick={this.openLoginHandler}>Login</button>
         <button onClick={this.logoutHandler}>Logout</button>
+        
+          {/* <FaceIcon className={classes.FaceIcon}fontSize={'large'} /> */}
+       
+       
+
         <MainPage 
         mainHeaderClickHandler = {this.mainHeaderClickHandler}
         status={mainPageStatus} 
