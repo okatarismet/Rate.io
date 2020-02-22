@@ -9,15 +9,11 @@
     background-color: #F7F7F7;
 }
 #p1 {
-    
-    /* float: left; */
     margin-left: 1em;
     width: 35%;
     display: inline-block
 }
 #btn1 {
-    /* margin-left: 13em; */
-    float: right;
     width: 30%;
     border: none;
     height: 22px;
@@ -35,9 +31,6 @@
     background: rgba(207, 253, 255, 1);
 }
 #star1 {
-    /* margin-left: 13em; */
-    /* position: relative; */
-    /* float: left; */
     width: 30%;
     display: inline-block
 }

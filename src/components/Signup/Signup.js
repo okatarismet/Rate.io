@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-
-import Button from '../UI/Button/Button';
-import Spinner from '../UI/Spinner/Spinner';
 import classes from './Signup.css';
-
-import Input from '../UI/Input/Input';
-import { thisExpression } from '@babel/types';
 const axios = require('axios');
 
 class Signup extends Component {
@@ -25,18 +19,17 @@ class Signup extends Component {
         if(value !== "undefined"){
             let lastAtPos = value.lastIndexOf('@');
             let lastDotPos = value.lastIndexOf('.');
-    
             if (!(lastAtPos < lastDotPos && lastAtPos > 0 && value.indexOf('@@') == -1 && lastDotPos > 2 && (value.length - lastDotPos) > 2)) {
-               this.setState({emailIsValid:false})
-               return;
+                this.setState({emailIsValid:false})
+                return;
             } else {
                 this.setState({emailIsValid:true})
             }
         }
         if(this.state.password !== "undefined"){
             if (this.state.password.length < 6) { 
-               this.setState({passwordIsValid:false})
-               return;
+                this.setState({passwordIsValid:false})
+                return;
             } else {
                 this.setState({passwordIsValid:true})
             }
@@ -53,24 +46,23 @@ class Signup extends Component {
                 sex: 'm'
             } 
         })
-        .then(function (response) {
+        .then((response) =>{
             console.log(response);
             localStorage.setItem('token',response.data.token)
             console.log("token is " +localStorage.getItem('token'))
             alert('Signup Succesfull !')
         })
-        .catch(function (error) {
+        .catch((error) => {
             console.log(error);
         })
-       
     }
 
-    emailChangedHandler = (event) =>{
+    emailChangedHandler = (event) => {
         this.setState({
         email: event.target.value
         })    
     }
-    passwordChangedHandler = (event) =>{
+    passwordChangedHandler = (event) => {
         this.setState({
           password: event.target.value
         })
@@ -99,7 +91,6 @@ class Signup extends Component {
                         { !this.state.fullNameIsValid ? <p className={classes.notValid}>please enter your name and surname separated by a space</p> : null }
                     </div>
                     <div>
-                        
                         <label>E-Mail</label>
                         <input className={classes.SignupInput} 
                             onChange={this.emailChangedHandler} 

@@ -10,13 +10,10 @@ const axios = require('axios');
 class PreviousRatings extends Component {
     constructor(props) {
       super(props);
-  
       this.state = {
         data: [{}],
         open:false
       }
-  
-      // this.inputChangedHandler = this.inputChangedHandler.bind(this);
   }
  
   getData = async (value) =>{
@@ -26,22 +23,15 @@ class PreviousRatings extends Component {
     console.log('----------')
     this.setState({data:previousRatings.data, open:true})
   }
-    componentDidMount(){
-        this.getData()
-    }
+  componentDidMount(){
+    this.getData()
+  }
   render(){
-    
-    
-    
-
-    return <div>
-        
-               <h2>Previous Ratings</h2>
-               { this.state.open ?   <Element type={"forPreviousRatings"} data={this.state.data}/>:null}
-                 
-             
-           </div>
-}
+    return  <div>
+              <h2>Previous Ratings</h2>
+              { this.state.open ?   <Element type={"forPreviousRatings"} data={this.state.data}/>:null}
+            </div>
+  }
 }
 
-export default PreviousRatings
+export default PreviousRatings;
