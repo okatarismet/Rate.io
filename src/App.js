@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Route, Link, withRouter }from 'react-router-dom';
 import './App.css';
+import FaceIcon from '@material-ui/icons/Face';
 
 import MainPage from './containers/MainPage/MainPage'
 import ResultPage from './containers/ResultPage/ResultPage'
@@ -8,42 +9,62 @@ import InfoCard from './components/InfoCard/InfoCard'
 import Input from './components/UI/Input/Input'
 import Modal from './components/UI/Modal/Modal';
 import Login from './components/Login/Login';
-
+import NavBar from './components/NavBar/NavBar';
+import Signup from './components/Signup/Signup';
+import { classes } from 'istanbul-lib-coverage';
+const axios = require('axios');
 
 
 class App extends Component {
-  state = {
-    page: 0,
-    openLogin: false,
-    query: "",
-    elem: {}
-  }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      openLogin: false, 
+      openSignup: false,
+      isLogin:false,
+      query: "",
+      data:[{}],
+      elem: {},
+      page:"mainPage"
+    }
+
+    // this.inputChangedHandler = this.inputChangedHandler.bind(this);
+}
+
+  
   
   inputChangedHandler = (event) =>{
-    console.log("inputChangedHandler()");
+    let resp1 = null;
     if(event.target.value.length >= 3){
-      console.log("3");
       this.setState({
-        page: 1,
-        query: event.target.value
+        query: event.target.value,
+        page:'resultPage'
       })
-      this.props.history.push({pathname:'/resultPage'});
+      this.getData(event.target.value);
     }
+    console.log("resp1"+resp1);
+    this.setState({data: resp1})
   }
+
+  getData = async (value) =>{
+    let res = await axios.get("http://195.201.19.95:8080/search/"+value);
+    // let { data } = res.data;
+    console.log(res.data[0]);
+    this.setState({ data: res.data });
+    console.log("this.state.data "+this.state.data);
+  }
+
   infoCardHandler = (elem) =>{
-    // console.log(elem);
-   
+    console.log("elem" + elem);
       this.setState({
-        page: 2,
         elem:elem
       })
     
   }
   mainHeaderClickHandler = () =>{
-    this.setState({
-      page: 0,
-    })
-    this.props.history.push({pathname:'/'});
+    
+   this.setState({page:"mainPage"})
   }
   closeLoginHandler = () =>{
     this.setState({openLogin:false})
@@ -51,55 +72,86 @@ class App extends Component {
   openLoginHandler = () =>{
     this.setState({openLogin:true})
   }
+  closeSignupHandler = () =>{
+    this.setState({openSignup:false})
+  }
+  openSignupHandler = () =>{
+    this.setState({openSignup:true})
+  }
+  isLogin = () => {
+    return localStorage.getItem('token') != 'undefined';
+  }
+  logoutHandler = () =>{
+    if(localStorage.getItem('token') == undefined){
+      alert('You are already logouted')
+      return;
+    }
+    localStorage.clear();
+    this.setState({isLogin:false})
+    if(localStorage.getItem('token') == undefined){
+      alert('Logout Succesfull!')
+    }
+  }
   render () {
     let currentPage = null;
     let infoCard = null;
-    let MainBox = 'mainBox';
-    let MainHeader = 'mainHeader'
-    let MainInput = 'mainInput'
+    let mainPageStatus = 'Main'
     let AppClass = ''
-    if(this.state.page == 1 ){
-      MainBox = 'mainBoxResult';
-      MainHeader = 'mainHeaderResult'
-      MainInput = 'mainInputResult'
-      
-    }
-    if(this.state.page == 2){
-      MainBox = 'mainBoxResult';
-      MainHeader = 'mainHeaderResult'
-      MainInput = 'mainInputResult'
-      // AppClass = "modal"
-      infoCard =  <InfoCard elem={this.state.elem}/>
-    }
+
+    
+    switch ( this.state.page ) {
+      case ('mainPage'):
+        
+        break;
+      case ( 'resultPage' ):   
+      mainPageStatus = 'Result'
+       currentPage = <ResultPage 
+          click = {this.infoCardHandler}
+          mainHeaderClickHandler = {this.mainHeaderClickHandler}
+          search={this.state.query}
+          data={this.state.data}
+          changed= {this.inputChangedHandler}/>
+       
+        break;
+      case ( 'password' ):
+          break;
+      case ( 'select' ):
+          break;
+      default:
+         
+  }
+
     return (
       
       <div className="App">
-        <button onClick={this.openLoginHandler}>Click</button>
-        <Link to="/">MainPage</Link>
-        <Link to="/resultPage">ResultPage</Link>
-          <Modal show={this.state.openLogin} modalClosed={this.closeLoginHandler}>
-            <Login 
-                ingredients={this.state.ingredients}
-                price={this.state.totalPrice}
-                purchaseCancelled={this.purchaseCancelHandler}
-                purchaseContinued={this.purchaseContinueHandler} />
-          </Modal>
-          <Route path="/" exact 
-            render={ (props) => <MainPage 
-            mainHeaderClickHandler = {this.mainHeaderClickHandler}
-            mainBox={MainBox} 
-            changed={this.inputChangedHandler}
-            mainHeader={MainHeader}
-            mainInput={MainInput}/>}/>
-          <Route path="/resultPage" exact
-            render={ (props) => <ResultPage 
-            click = {this.infoCardHandler}
-            mainHeaderClickHandler = {this.mainHeaderClickHandler}
-            search={this.state.query}
-            changed= {this.inputChangedHandler}
-            query = {this.state.query}
-          />}/>
-         
+        <Modal show={this.state.openLogin} modalClosed={this.closeLoginHandler}>
+            <Login/>
+        </Modal>
+        <Modal show={this.state.openSignup} modalClosed={this.closeSignupHandler}>
+            <Signup/>
+        </Modal>
+        
+        <NavBar 
+            signup={this.openSignupHandler}
+            login={this.openLoginHandler}
+            logout={this.logoutHandler}
+        />
+        {/* <button onClick={this.openSignupHandler}>Signup</button>
+        <button onClick={this.openLoginHandler}>Login</button>
+        <button onClick={this.logoutHandler}>Logout</button> */}
+        
+          {/* <FaceIcon className={classes.FaceIcon}fontSize={'large'} /> */}
+       
+        <Route exact path="/">
+        <MainPage 
+        mainHeaderClickHandler = {this.mainHeaderClickHandler}
+        status={mainPageStatus} 
+        changed={this.inputChangedHandler}
+        
+        />
+        {currentPage}
+          
+        </Route>
        
       </div>
   

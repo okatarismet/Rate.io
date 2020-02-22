@@ -1,6 +1,7 @@
 .itemBox {
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
+    padding: 2px 15px;
     margin-left: 2em;
     cursor: pointer;
 }
@@ -39,4 +40,8 @@
     /* float: left; */
     width: 30%;
     display: inline-block
+}
+.p2 {
+    display: inline;
+    margin-left: 15px
 }

@@ -1,69 +1,83 @@
-import React from 'react';
+import React,{Component} from 'react';
 import classes from './ResultPage.css'
 import Element from './Element/Element'
+import Modal from '../../components/UI/Modal/Modal';
+import InfoCard from '../../components/InfoCard/InfoCard'
 const axios = require('axios');
 
 
-const ResultPage = (props) =>{
-    let person = null;
-    let foundation = null;
-    let brand = null;
-
-    const [thisState,thisSetState] = React.useState({
-        data: [{}]
-    })
-    let response1 = 0;
-    const start = (resp)=>{ 
-        
+class ResultPage extends Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [{}],
+            opeInfoCard: false,
+            elem: {}
+        }
+    }
+    closeInfoCard = () =>{
+        this.setState({openInfoCard:false})
+      }
+    render() {
+    const start = ()=>{ 
         axios({
-            method: 'post',
-            url: 'http://localhost:8080/users/list/search',
+            method: 'get',
+            url: 'http://195.201.19.95:8080/search/'+this.props.search,
             headers: {},
-            data: {
-                search:props.search
-            } 
+            data: {search:this.props.search} 
         })
         .then(function (response) {
-            thisSetState({
-                data: response.data
-            })
+            this.setState({data: response.data})
             console.log(response.data);
-            resp = 1;
         })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .finally(function () {
-            // always executed
-        });
+        .catch(function (error) {console.log(error);})
+        .finally(function () {});
 
     }
       
-   React.useEffect(()=>start(response1),[props.search])
-    if(thisState.data.length == 0){
-        console.log("no match found");
+    
+   
+    // const closeInfoCard = () =>{
+    //     this.setState({
+    //         openInfoCard: false
+    //     })
+    // }
+    const openInfoCard = () =>{
+        this.setState({
+            opeInfoCard: true
+        })
     }
-    let Elements = null;
-    if(response1 == 1){
-        console.log("response 1");
-      
-    }
+    const infoCardHandler = (elem) =>{
+        console.log("basyom ha")
+        console.log(elem);
+        // console.log(this.state.data);
+        // console.log(elem);
+        const data = this.state.data;
+        this.setState({
+            elem: elem
+        })
+        console.log(this.state.elem);
+        openInfoCard();
+        
+      }
     return  <div>
-            <div className={classes.mainBoxResult}>
-                <h1 className={classes.mainHeaderResult} onClick={props.mainHeaderClickHandler}>Rate.io</h1>
-                <input className={classes.mainInputResult} type="text" onChange={props.changed} placeholder="Search Something. Persons, Foundations, Brands ..."/>
+         
+         {/* <Modal show={this.state.opeInfoCard} modalClosed={this.closeInfoCard}>
+         <InfoCard elem={this.state.elem}/>
+          </Modal>
+            */}
+        
+            {/* <div className={classes.mainBoxResult}>
+                <h1 className={classes.mainHeaderResult} onClick={this.props.mainHeaderClickHandler}>Rate.io</h1>
+                <input className={classes.mainInputResult} type="text" onChange={this.props.changed} placeholder="Search Something. Persons, Foundations, Brands ..."/>
                 
-            </div>
-            <div className={classes.resultBox}>
-                <h1>Persons</h1>
-                <div><Element click={props.click} data={thisState.data} person={person}/></div>
-                {/* <h1>Foundations</h1>
-                <Element data={thisState.data} foundation={foundation}/>
-                <h1>Brands</h1>
-                <Element data={thisState.data} brand={brand}/> */}
-            </div>
+            </div> */}
+            { this.state.opeInfoCard ? <InfoCard elem={this.state.elem}/> :<div className={classes.resultBox}>
+            <h1>Persons</h1>
+            <Element click={infoCardHandler} data={this.props.data}/>
+             
+            </div>}
             </div>
 }
-
+    }
 export default ResultPage
