@@ -22,7 +22,7 @@ class ResultPage extends Component{
     const start = ()=>{ 
         axios({
             method: 'get',
-            url: 'http://localhost:8080/search/'+this.props.search,
+            url: 'http://195.201.19.95:8080/search/'+this.props.search,
             headers: {},
             data: {search:this.props.search} 
         })

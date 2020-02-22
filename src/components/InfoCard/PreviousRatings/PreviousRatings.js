@@ -20,7 +20,7 @@ class PreviousRatings extends Component {
   }
  
   getData = async (value) =>{
-    let previousRatings = await axios.get("http://localhost:8080/get/ratings/"+this.props.elem.id);
+    let previousRatings = await axios.get("http://195.201.19.95:8080/get/ratings/"+this.props.elem.id);
     console.log('----------')
     console.log(previousRatings.data);
     console.log('----------')

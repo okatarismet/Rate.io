@@ -43,7 +43,7 @@ class Signup extends Component {
         }
         axios({
             method: 'put',
-            url: 'http://localhost:8080/add/signup',
+            url: 'http://195.201.19.95:8080/add/signup',
             headers: {},
             data: {
                 email:this.state.email,

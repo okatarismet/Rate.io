@@ -9,6 +9,7 @@ import InfoCard from './components/InfoCard/InfoCard'
 import Input from './components/UI/Input/Input'
 import Modal from './components/UI/Modal/Modal';
 import Login from './components/Login/Login';
+import NavBar from './components/NavBar/NavBar';
 import Signup from './components/Signup/Signup';
 import { classes } from 'istanbul-lib-coverage';
 const axios = require('axios');
@@ -19,7 +20,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      openLogin: false,
+      openLogin: false, 
       openSignup: false,
       isLogin:false,
       query: "",
@@ -47,7 +48,7 @@ class App extends Component {
   }
 
   getData = async (value) =>{
-    let res = await axios.get("http://localhost:8080/search/"+value);
+    let res = await axios.get("http://195.201.19.95:8080/search/"+value);
     // let { data } = res.data;
     console.log(res.data[0]);
     this.setState({ data: res.data });
@@ -130,14 +131,18 @@ class App extends Component {
             <Signup/>
         </Modal>
         
-        <button onClick={this.openSignupHandler}>Signup</button>
+        <NavBar 
+            signup={this.openSignupHandler}
+            login={this.openLoginHandler}
+            logout={this.logoutHandler}
+        />
+        {/* <button onClick={this.openSignupHandler}>Signup</button>
         <button onClick={this.openLoginHandler}>Login</button>
-        <button onClick={this.logoutHandler}>Logout</button>
+        <button onClick={this.logoutHandler}>Logout</button> */}
         
           {/* <FaceIcon className={classes.FaceIcon}fontSize={'large'} /> */}
        
-       
-
+        <Route exact path="/">
         <MainPage 
         mainHeaderClickHandler = {this.mainHeaderClickHandler}
         status={mainPageStatus} 
@@ -146,6 +151,7 @@ class App extends Component {
         />
         {currentPage}
           
+        </Route>
        
       </div>
   

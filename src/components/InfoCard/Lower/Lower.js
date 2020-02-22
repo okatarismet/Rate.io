@@ -29,7 +29,7 @@ class Lower extends Component {
     rateHim = async (value) =>{
         let newRating = await axios({
             method: 'post',
-            url: 'http://localhost:8080/operation/rate',
+            url: 'http://195.201.19.95:8080/operation/rate',
             headers: {
               "token": localStorage.getItem('token')
           },
@@ -43,6 +43,8 @@ class Lower extends Component {
         });
         console.log('rate ettim')
         console.log(newRating);
+        alert("You have Rated "+this.props.elem.fname+" "+this.props.elem.lname+" succesfully!\nThanks for your Rating!")
+      
         }
     componentDidMount(){
         this.getData()
@@ -52,7 +54,6 @@ class Lower extends Component {
         console.log("asdfsdf");
         console.log(this.props.elem);
         this.rateHim();
-        alert("You have Rated "+this.props.elem.fname+" "+this.props.elem.lname+" succesfully!\nThanks for your Rating!")
     }
     
     
