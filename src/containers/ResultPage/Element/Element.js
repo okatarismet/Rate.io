@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import classes from'./Element.css'
-import { runInContext } from 'vm';
 import StarRating from '../../../components/StarRating/StarRating'
-const axios = require('axios');
 
 
 const Element = (props)=>{
@@ -12,24 +10,21 @@ const Element = (props)=>{
     }
     if(props.type == "forPreviousRatings"){
         return  <div className={classes.elementBox}>
-        {props.data.map((elem,index)=>{
-            return  <div className={classes.itemBox} key={index}>
-                <p className={classes.p2}>{"* "+elem.fname+ " "+ elem.lname}</p><p className={classes.p2}>{elem.rate+"/10"}</p><StarRating className={classes.p2} rating={elem.rate} starDimension="1.5em"/> 
-             </div>
-        })}
-            
-        </div>
+                    {props.data.map((elem,index)=>{
+                        return  <div className={classes.itemBox} key={index}>
+                            <p className={classes.p2}>{"* "+elem.fname+ " "+ elem.lname}</p><p className={classes.p2}>{elem.rate+"/10"}</p><StarRating className={classes.p2} rating={elem.rate} starDimension="1.5em"/> 
+                        </div>
+                    })}  
+                </div>
     } else {
         return  <div className={classes.elementBox}>
-        {props.data.map((elem,index)=>{
-            return  <div onClick={()=>props.click(elem)} className={classes.itemBox} key={index}>
-               <p id="p1">{"* "+elem.name}</p>   {/*<p id="star1">6.2/10</p>  <StarRating starDimension="1.5em"/>  */}
-             </div>
-        })}  
-        </div>
-    }
-   
-        
+                    {props.data.map((elem,index)=>{
+                        return  <div onClick={()=>props.click(elem)} className={classes.itemBox} key={index}>
+                        <p id="p1">{"* "+elem.name}</p>   {/*<p id="star1">6.2/10</p>  <StarRating starDimension="1.5em"/>  */}
+                        </div>
+                    })}  
+                </div>
+    }      
 }
 
-export default Element
+export default Element;

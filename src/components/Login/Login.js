@@ -25,16 +25,16 @@ class Login extends Component {
             let lastDotPos = value.lastIndexOf('.');
     
             if (!(lastAtPos < lastDotPos && lastAtPos > 0 && value.indexOf('@@') == -1 && lastDotPos > 2 && (value.length - lastDotPos) > 2)) {
-               this.setState({emailIsValid:false})
-               return;
+                this.setState({emailIsValid:false})
+                return;
             } else {
                 this.setState({emailIsValid:true})
             }
         }
         if(this.state.password !== "undefined"){
             if (this.state.password.length < 6) { 
-               this.setState({passwordIsValid:false})
-               return;
+                this.setState({passwordIsValid:false})
+                return;
             } else {
                 this.setState({passwordIsValid:true})
             }
@@ -48,39 +48,35 @@ class Login extends Component {
                 password:this.state.password
             } 
         })
-        .then(function (response) {
+        .then((response) => {
             console.log(response);
             localStorage.setItem('token',response.data.token)
             localStorage.setItem('ID',response.data.id)
             console.log("token is " +localStorage.getItem('token'))
             alert('Login Succesfull !')
         })
-        .catch(function (error) {
+        .catch((error) => {
             console.log(error);
         })
        
     }
 
     emailChangedHandler = (event) =>{
-          this.setState({
-            email: event.target.value
-          })
-        
-      }
-      passwordChangedHandler = (event) =>{
         this.setState({
-          password: event.target.value
+        email: event.target.value
         })
-      }
+    }
+    passwordChangedHandler = (event) =>{
+        this.setState({
+            password: event.target.value
+        })
+    }
      
     render () {
-     
         return (
             <div className={classes.Login}>
                 <div className={classes.Form}>
-              
                     <div>
-                        
                         <label>E-Mail</label>
                         <input className={classes.loginInput} 
                             onChange={this.emailChangedHandler} 
