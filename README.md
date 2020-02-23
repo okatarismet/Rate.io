@@ -1,4 +1,4 @@
-Rate.io
+# Rate.io
 
 ```
 npm install
