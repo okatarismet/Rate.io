@@ -1,14 +1,21 @@
 .image {
     height: 9em;
     width: 9em;
+    /* position: relative; */
+    right: 25px;
+    left: 0px;
     border-radius: 100px;
+    padding-left: -10px;
+    MARGIN-left: -20px;
     /* grid-row: 1 / span 2; */
 }
 .Upper {
-    display: grid;
+    display: flex;
+    justify-content:space-between;
     grid-template-columns: 15em 15em;
     grid-gap: 10px;
     padding: 10px;
+    width: 70%;
     margin-top: 27px;
     margin-left: 11px;
     margin-right: 11px;
@@ -17,21 +24,26 @@
     /* grid-row: 1 / span 2; */
     font-family: "Open Sans";
     /* font-weight: bold; */
+    left: 25px;
     font-size: 25px;
-    margin: 0px;
+    margin-left: 20px;
 }
 .title {
     /* grid-row: 1 / span 2; */
     font-family: "Open Sans";
     /* font-weight: bold; */
+    position: relative;
+    
     font-size: 15px;
     margin-top: 2px;
+    margin-left: 20px;
     font-style: italic;
     font-weight: bold;
 }
 .icon {
     height: 1.5em;
     width: 1.5em;
+    margin-left: 20px;
     margin-top: 2px;
     /* display: inline-block */
 }
@@ -40,6 +52,7 @@
     /* font-weight: bold; */
     font-size: 13px;
     margin-top: 2px;
+    /* margin-left: 20px; */
     font-style: italic;
     /* display: inline-block; */
 }

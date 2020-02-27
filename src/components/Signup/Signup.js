@@ -1,29 +1,24 @@
 import React, { Component } from 'react';
-
-import Button from '../UI/Button/Button';
-import Spinner from '../UI/Spinner/Spinner';
-import classes from './Login.css';
-
-import Input from '../UI/Input/Input';
-import { thisExpression } from '@babel/types';
+import classes from './Signup.css';
 const axios = require('axios');
 
-class Login extends Component {
+class Signup extends Component {
     state = {
         email:'',
         password:'',
+        fullName: '',
+        gender: '',
         loading: false,
         formIsValid: true,
         emailIsValid:true,
+        fullNameIsValid:true,
         passwordIsValid:true
     }
     validate = () =>{
         const value = this.state.email;
         if(value !== "undefined"){
-            console.log(123123);
             let lastAtPos = value.lastIndexOf('@');
             let lastDotPos = value.lastIndexOf('.');
-    
             if (!(lastAtPos < lastDotPos && lastAtPos > 0 && value.indexOf('@@') == -1 && lastDotPos > 2 && (value.length - lastDotPos) > 2)) {
                 this.setState({emailIsValid:false})
                 return;
@@ -39,62 +34,80 @@ class Login extends Component {
                 this.setState({passwordIsValid:true})
             }
         }
-        
         axios({
-            method: 'post',
-            url: 'http://195.201.19.95:8080/operation/loginWeb',
+            method: 'put',
+            url: 'http://195.201.19.95:8080/add/signup',
             headers: {},
             data: {
                 email:this.state.email,
-                password:this.state.password
+                password:this.state.password,
+                fname: this.state.fullName.split(' ')[0],
+                lname: this.state.fullName.split(' ')[1],
+                sex: 'm'
             } 
         })
-        .then((response) => {
+        .then((response) =>{
             console.log(response);
             localStorage.setItem('token',response.data.token)
-            localStorage.setItem('ID',response.data.id)
             console.log("token is " +localStorage.getItem('token'))
-            alert('Login Succesfull !')
+            alert('Signup Succesfull !')
         })
         .catch((error) => {
             console.log(error);
         })
-       
     }
 
-    emailChangedHandler = (event) =>{
+    emailChangedHandler = (event) => {
         this.setState({
         email: event.target.value
+        })    
+    }
+    passwordChangedHandler = (event) => {
+        this.setState({
+          password: event.target.value
         })
     }
-    passwordChangedHandler = (event) =>{
+    fullNameChangedHandler = (event) =>{
         this.setState({
-            password: event.target.value
+          fullName: event.target.value
+        })
+    }
+    genderChangedHandler = (event) =>{
+        this.setState({
+          gender: event.target.value
         })
     }
      
     render () {
         return (
-            <div className={classes.Login}>
+            <div className={classes.Signup}>
                 <div className={classes.Form}>
                     <div>
+                        <label>Full Name</label>
+                        <input className={classes.SignupInput} 
+                            onChange={this.fullNameChangedHandler} 
+                            type="ipnut" name="input" 
+                            placeholder="John Doe" />
+                        { !this.state.fullNameIsValid ? <p className={classes.notValid}>please enter your name and surname separated by a space</p> : null }
+                    </div>
+                    <div>
                         <label>E-Mail</label>
-                        <input className={classes.loginInput} 
+                        <input className={classes.SignupInput} 
                             onChange={this.emailChangedHandler} 
                             type="email" name="email" 
-                            placeholder="your mail" />
+                            placeholder="John@Doe.com" />
                         { !this.state.emailIsValid ? <p className={classes.notValid}>not valid email</p> : null }
                     </div>
                     <div>
                         <label>Password</label>
-                        <input className={classes.loginInput} 
+                        <input className={classes.SignupInput} 
                             onChange={this.passwordChangedHandler} 
                             type="password" name="password" 
                             placeholder="password" />
                         { !this.state.passwordIsValid ? <p className={classes.notValid}>password should be at least 6 digits</p> : null }
                     </div>
                     <div>
-                        <button className={classes.loginButton} onClick={this.validate}>LOGIN</button>
+                        <button className={classes.SignupButton} onClick={this.validate}>Signup</button>
                     </div>
                 </div>
             </div>
@@ -102,4 +115,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default Signup;
