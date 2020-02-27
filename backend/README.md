@@ -1,6 +1,6 @@
 # Rating App - Backend Code
 
-One This is a Rest API which is written in Nodejs. It uses PostgreSQL as databse.It is using by multiple platforms like Web and Mobile.
+This is a Rest API which is written in Nodejs. It uses PostgreSQL as databse. It is developed to serve both Web and Mobile applications.
 
 ## Getting Started
 
