@@ -24,6 +24,7 @@ class Lower extends Component {
     console.log(this.state.rating);
     }
     rateHim = async (value) =>{
+        console.log('Ayranli',localStorage.getItem('token'));
         let newRating = await axios({
             method: 'post',
             url: 'http://195.201.19.95:8080/operation/rate',
