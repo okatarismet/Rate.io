@@ -45,6 +45,7 @@ class Lower extends Component {
         }
   componentDidMount(){
       this.getData()
+      
   }
   render(){
     const Rate = () =>{
